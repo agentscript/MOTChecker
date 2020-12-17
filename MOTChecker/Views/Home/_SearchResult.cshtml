@@ -1,0 +1,38 @@
+﻿@using MOTChecker.Models
+@model MOTChecker.Models.Vehicle
+
+@if (@Model != null)
+{
+    <p></p>
+    <div class="alert alert-success" role="alert">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Make</th>
+                    <th scope="col">Model</th>
+                    <th scope="col">Color</th>
+                    <th scope="col">MOT Expiry Date</th>
+                    <th scope="col">Mileage (at last check)</th>
+                </tr>
+            </thead>
+            <tr>
+                <td>@Model.make</td>
+                <td>@Model.model</td>
+                <td>@Model.primaryColour</td>
+
+                @if (Model.motTests != null)
+                {
+                    var _motTest = Model.motTests.OrderByDescending(c => c.expiryDate).First();
+                    <td>@_motTest.expiryDate.ToShortDateString()</td>
+                    <td>@_motTest.odometerValue  @_motTest.odometerUnit</td>
+
+                }
+                else
+                {
+                    <td>No MOT Data found</td>
+                    <td> No Milegae Available  </td>
+                }
+            </tr>
+        </table>
+    </div>
+}
